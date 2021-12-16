@@ -1,0 +1,134 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 15px;
+    line-height: 1.4;
+    background-color: white;
+}
+
+.header {
+    width: 100%;
+    padding: 20px 0px;
+}
+
+.header__narvigation {
+    width: 100%;
+    background-color: slategray;
+    display: flex;
+    position: fixed;
+    top: 0px;
+}
+
+.header__narvigation .header__narvigation-left {
+    list-style-type: none;
+    display: flex;
+    width: 70%;
+    padding-left: 10px;
+}
+
+.header__narvigation .header__narvigation-right {
+    list-style-type: none;
+    display: flex;
+    justify-content: flex-end;
+    width: 30%;
+    padding-right: 10px;
+}
+
+.header__narvigation ul li {
+    padding: 7px 10px;
+    font-size: 20px;
+    color: whitesmoke;
+    cursor: pointer;
+}
+
+.header__narvigation ul li:hover {
+    background-color: black;
+}
+
+.content {
+    width: 100%;
+    background-color: rgb(255, 255, 255);
+}
+
+.content .content__topTopic {
+    padding: 15px;
+    font-size: 35px;
+    text-align: center;
+}
+
+.content__formInput {
+    padding: 20px 2px 20px 35px;
+    display: flex;
+    align-items: flex-start;
+    font-size: 18px;
+}
+
+.content__formInput label {
+    padding: 0px 10px;
+}
+
+.content__formInput #input_name {
+    font-size: 18px;
+    margin-right: 50px;
+}
+
+.content__formInput #input_comment {
+    font-size: 18px;
+    resize: none;
+}
+
+.content__formInput button {
+    font-size: 18px;
+    margin-left: 15px;
+    background-color: slategray;
+    border: solid 1px black;
+    padding: 3px;
+}
+
+.content__formInput button:hover {
+    background-color: rgb(161, 180, 199);
+    cursor: pointer;
+}
+
+.content .content__table {
+    border-collapse: collapse;
+    border: 1px black solid;
+    margin: 0 auto;
+    font-size: 17px;
+    width: 98% !important;
+    margin: 0px auto;
+}
+
+.content__table .table__name {
+    width: 12%;
+}
+
+.content__table .table__content {
+    width: 80%;
+    font-weight: bold;
+}
+
+.content__table .table__predict {
+    width: 8%;
+}
+
+/* .content__table .table__details {
+    width: 25%;
+} */
+
+.content__table td {
+    text-align: center;
+    padding: 1px 3px;
+}
+
+.content__table .table__good {
+    background-color: rgb(0, 255, 221);
+}
+
+.content__table .table__bad {
+    background-color: rgb(255, 167, 167);
+}

@@ -1,0 +1,211 @@
+﻿ship	vận chuyển
+shop	cửa hàng
+m	mình
+mik	mình
+ko	không
+gthieu	giới thiệu
+k	không
+kh	không
+rw	review
+khong	không
+kg	không
+khg	không
+tl	trả lời
+rep	trả lời
+r	rồi
+kkk	haha
+fb	facebook
+face	faceook
+thanks	cảm ơn
+thank	cảm ơn
+tks	cảm ơn
+tk	cảm ơn
+ok	tốt
+oki	tốt
+okie	tốt
+sp	sản phẩm
+dc	được
+vs	với
+đt	điện thoại
+thjk	thích
+thik	thích
+qá	quá
+trể	trễ
+bgjo	bao giờ
+h	giờ
+qa	quá
+dep	đẹp
+xau	xấu
+ib	nhắn tin
+cute	dễ thương
+sz	size
+tr	triệu
+k	ngàn
+good	tốt
+god	tốt
+bt	bình thường
+dc	được
+sd	sử dụng
+thegioididong	thế giới di động
+x	số
+ko	không
+ios	hệ điều hành
+h	giờ
+vk	vợ
+cung	cũng
+oke	tốt
+thk	cảm ơn
+thnk	cảm ơn
+series	bộ
+ng	người
+onl	online
+ip	điện thoại
+vsoi	với
+trâu	tốt
+edit	chỉnh sửa
+xò	tốt
+5sao	tốt
+thơm	tốt
+chs	chả hiểu sao
+klq	không liên quan
+clgt	cần lời giải thích
+hum	hôm
+dwc	được
+wa	quá
+wen	quên
+lun	luôn
+bun	buồn
+k?	không
+u	bạn
+rui	rồi
+chuối	dỡ
+mí	mấy
+hok	không
+hk	không
+hkg	không
+hong	không
+phở	đẹp
+thx	cảm ơn
+thks	cảm ơn
+tx	cảm ơn
+thaxu	cảm ơn
+ntn	như thế nào
+mog	mong
+nhung	nhưng
+chi	chỉ
+co	có
+mik	mình
+minh	mình
+mạ	mẹ
+mensenge	tin nhắn
+nhuwng	nhưng
+sp	sản phẩm
+cskh	chăm sóc khách hàng
+wet	website
+fix	sửa lỗi
+lag	chậm
+sida	dỡ
+cùi	dỡ
+mn	mọi người
+bùn	buồn
+fai	phải
+hqua	hôm qua
+bh	bảo hành
+ttbh	trung tâm bảo hành
+app	ứng dụng
+mxh	mạng xã hội
+cam	máy ảnh
+came	máy ảnh
+camera	máy ảnh
+smattphone	điện thoại
+fbk	mạng xã hội
+qtv	quản trị viên
+nt	như thế
+fullbox	nguyên hộp
+tgdd	thế giới di động
+tgdđ	thế giới di động
+dmx	điện máy xanh
+dienmayxanh	điện máy xanh
+e	em
+ck	chồng
+wer	website
+thoi	thôi
+thui	thôi
+thuat	thuật
+j	gì
+sx	sản xuất
+dk	đăng ký
+đk	đăng ký
+jb	mở mạng
+cũngn	cũng
+tuan	tuần
+okê	tốt
+vao	vào
+bth	bình thường
+đệm	đêm
+ss	samsung
+ad	quản trị viên
+back	trở lại
+bang	bằng
+vê	về
+nua	nữa
+=	bằng
+biet	biết
+ny	người yêu
+ma2	mà
+chubg	chung
+nhu	như
+vi	vì
+toi	tôi
+sai	sài
+nhan	nhận
+xet	xét
+moi	mọi
+thu	thứ
+game	trò chơi
+china	trung quốc
+test	kiểm tra
+hiu	hiểu
+sg	sang
+bi	bị
+ms	mới
+istagram	instagram
+okk	tốt
+wf	wifi
+yt	youtube
+msg	messenger
+mess	messenger
+mesenger	messenger
+ktv	kỹ thuật viên
+tv	thành viên
+aple	apple
+ae	anh em
+tui	tôi
+t	tôi
+s	sao
+dt	điện thoại
+androi	android
+gb	gigabyte
+dis	disconnect
+g	gigabyte
+z	vậy
+v	vậy
+bien	biến
+mk	mình
+pass	mật khẩu
+íu	yếu
+ak	à
+àk	à
+trc	trước
+zắt	giắc
+ngag	ngang
+hdh	hệ điều hành
+nge	nghe
+cty	công ty
+nv	nhân viên
+wed	website
+wep	website
+ik	đi
+đc	được
+hog	không
+ip	iphone

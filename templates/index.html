@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index_css.css') }}"> -->
+    <link rel="stylesheet" type="text/css" href="../static/index_css.css"> 
+    <title>Dự đoán đánh giá của người dùng Thế Giới Di Động</title>
+</head>
+<body>
+    <div class="header">
+        <div class="header__narvigation">
+            <ul class="header__narvigation-left">
+                <li>
+                    Xem tập dữ liệu
+                </li>
+                <li>
+                    Source code
+                </li>
+            </ul>
+            <ul class="header__narvigation-right">
+                <li>
+                    Thông tin liên hệ
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="content">
+        <h1 class="content__topTopic">Mô hình dự đoán đánh giá người dùng Thế Giới Di Động</h1>
+        <hr>
+        <form action="/predict" method="POST" class="content__formInput">
+            <label for="input_name">Tên người dùng</label>
+            <input type="text" id="input_name", name="input_name">
+            <label for="input_comment">Bình luận</label>
+            <textarea name="input_comment" id="input_comment" cols="50" rows="3" required></textarea>
+            <!-- <input type="text" id="input_comment", name="input_comment" required> -->
+            <button type="submit" id="add_comment">Dự đoán</button>
+        </form>
+        <div style="overflow-y: auto; height: 60vh;">
+            <table border="solid" style="width: 100%;" class="content__table">
+                <thead>
+                    <tr>
+                        <th class="table__name">Tên người dùng</th>
+                        <th class="table__content">Nội dung</th>
+                        <th class="table__predict">Đánh giá</th>
+                        <!-- <th class="table__details">Chi tiết</th> -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key in g_content_list %}
+                    {% if key[7] == 1%}
+                    <tr class="table__good">
+                    {% else%}
+                    <tr class="table__bad">
+                    {% endif %}
+                        <td>{{ key[2] }}</td>
+                        <td style="font-weight: bold; text-align: left;">{{ key[1] }}</td>
+                        {% if key[7] == 1%}
+                            <td>Đánh giá tốt</td>
+                        {% else %}
+                            <td>Đánh giá tệ</td>
+                        {% endif %}
+                        <!-- <td>Đánh giá tốt:
+                            <br>
+                            Đánh giá tệ: 
+                        </td> -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
