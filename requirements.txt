@@ -3,4 +3,3 @@ numpy==1.21.2
 Flask_MySQLdb==0.2.0
 transformers==4.12.3
 Flask_Cors==3.0.10
-torch==1.10.0
