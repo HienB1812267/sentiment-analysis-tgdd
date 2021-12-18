@@ -7,7 +7,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 
 # Use a service account
-cred = credentials.Certificate('sentiment-prediction-tgdd-firebase-adminsdk-olmlq-105780f3e4.json')
+cred = credentials.Certificate('./sentiment-prediction-tgdd-firebase-adminsdk-olmlq-105780f3e4.json')
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
@@ -19,14 +19,12 @@ app = Flask(__name__)
 CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-g_content_list = []
-
 #load model bert
 
 @app.route('/')
 @cross_origin(origin='*')
 def index_process():
-    return render_template("index.html")
+    return render_template("./templates/index.html")
 
 @app.route('/predict', methods=["POST", "GET"])
 @cross_origin(origin='*')
