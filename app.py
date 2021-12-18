@@ -24,7 +24,7 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @app.route('/')
 @cross_origin(origin='*')
 def index_process():
-    return render_template("123")
+    return "123"
 
 # @app.route('/predict', methods=["POST", "GET"])
 # @cross_origin(origin='*')
@@ -82,5 +82,3 @@ def index_process():
 #Start backend
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port='6868')
-
-
