@@ -1,21 +1,19 @@
 from flask import Flask, render_template, request, url_for, redirect
 from flask_cors import CORS, cross_origin
-from flask_mysqldb import MySQL
 import load_model as MODEL
 import process as PREPROCESS
 import pandas as pd
+import firebase_admin
+from firebase_admin import credentials, firestore
+
+# Use a service account
+cred = credentials.Certificate('sentiment-prediction-tgdd-firebase-adminsdk-olmlq-105780f3e4.json')
+firebase_admin.initialize_app(cred)
+
+db = firestore.client()
 
 #Init
 app = Flask(__name__)
-
-#database connection
-app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
-app.config['MYSQL_DB'] = 'flask_app_tgdd'
-# app.config['MYSQL_CHARSET'] = 'utf-8'
-
-mysql = MySQL(app)
 
 #Apply flask cors
 CORS(app)
@@ -28,19 +26,7 @@ g_content_list = []
 @app.route('/')
 @cross_origin(origin='*')
 def index_process():
-    #connect db
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM `data`")
-    #get data
-    data = cursor.fetchall()
-    #close
-    mysql.connection.commit()
-    cursor.close()
-    #load data
-    g_content_list.clear()
-    for line in data:
-        g_content_list.append(line)
-    return render_template("index.html", g_content_list=g_content_list)
+    return render_template("index.html")
 
 @app.route('/predict', methods=["POST", "GET"])
 @cross_origin(origin='*')
@@ -53,11 +39,11 @@ def predict_star():
     df = pd.DataFrame()
     df['comment'] = [comment]
     df['comment'] = df['comment'].apply(PREPROCESS.preProcessing)
-    comment = df['comment']
+    cmt = df['comment']
     #load vectorizes
     count_vector, tf_idf_vector = MODEL.load_vectorizes()
-    input_cv = count_vector.transform(comment)
-    input_tf = tf_idf_vector.transform(comment)
+    input_cv = count_vector.transform(cmt)
+    input_tf = tf_idf_vector.transform(cmt)
 
     output = []
     #Ta sẽ dùng mô hình logistic với tf-idf để dự đoán chính. Các mô hình còn lại sẽ được lưu vào database
@@ -81,14 +67,17 @@ def predict_star():
     output.append(logistic_cv.predict(input_cv)[0])
     output.append(logistic_tf.predict(input_tf)[0])
     #connect db
-    cursor = mysql.connection.cursor()
-    sql = "INSERT INTO data(comment, username, bayes_cv, bayes_tf, svm_cv, svm_tf, logis_cv, logis_tf) VALUES(%s, %s, %s, %s, %s, %s, %s, %s)"
-    val = (request.form['input_comment'], username, output[0], output[1], output[2], output[3], output[4], output[5])
-    cursor.execute(sql, val) 
-    #close
-    mysql.connection.commit()
-    cursor.close()
-
+    doc_ref = db.collection(u'data').document()
+    doc_ref.set({
+        u'comment': comment,
+        u'username': username,
+        u'bayes_cv': int(output[0]),
+        u'bayes_tf': int(output[1]),
+        u'svm_cv': int(output[2]),
+        u'svm_tf': int(output[3]),
+        u'logis_cv': int(output[4]),
+        u'logis_tf': int(output[5]),
+    })
     return redirect("/")
 
 

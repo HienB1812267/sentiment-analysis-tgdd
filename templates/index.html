@@ -47,8 +47,8 @@
                         <!-- <th class="table__details">Chi tiết</th> -->
                     </tr>
                 </thead>
-                <tbody>
-                    {% for key in g_content_list %}
+                <tbody id="table__body">
+                    <!-- {% for key in g_content_list %}
                     {% if key[7] == 1%}
                     <tr class="table__good">
                     {% else%}
@@ -61,15 +61,52 @@
                         {% else %}
                             <td>Đánh giá tệ</td>
                         {% endif %}
-                        <!-- <td>Đánh giá tốt:
-                            <br>
-                            Đánh giá tệ: 
-                        </td> -->
                     </tr>
-                    {% endfor %}
+                    {% endfor %} -->
                 </tbody>
             </table>
         </div>
     </div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        firebase.initializeApp({
+            apiKey: "AIzaSyDhpFRiDvSe5u7cehOMJG9RNSMd5dvWHKg",
+            authDomain: 'sentiment-prediction-tgdd.firebaseapp.com',
+            projectId: 'sentiment-prediction-tgdd'
+        });
+        var db = firebase.firestore();
+        db.collection("data").get().then((querySnapshot) => {
+            var tbody = document.getElementById("table__body")
+            querySnapshot.forEach((doc) => {
+                var data = doc.data();
+                var tr = document.createElement("tr");
+                if (data.logis_tf == 1) 
+                    tr.className = "table__good";
+                else 
+                    tr.className = "table__bad";
+                tbody.appendChild(tr);
+                var name = document.createElement("td");
+                name.innerHTML = data.username
+                tr.appendChild(name);
+                var comment = document.createElement("TD");
+                comment.innerHTML = data.comment;
+                comment.style.fontWeight = "bold";
+                comment.style.textAlign = "left";
+                tr.appendChild(comment);
+                var predict = document.createElement("TD");
+                if (data.logis_tf == 1)
+                    predict.innerHTML = "Đánh giá tốt";
+                else
+                    predict.innerHTML = "Đánh giá tệ";
+                tr.appendChild(predict);
+            });
+        });
+    });
+
+</script>
 </html>
