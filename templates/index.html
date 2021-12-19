@@ -9,16 +9,20 @@
     <div class="header">
         <div class="header__narvigation">
             <ul class="header__narvigation-left">
-                <li>
-                    Xem tập dữ liệu
+                <li onclick="view_data()">
+                    Tải tập dữ liệu
                 </li>
-                <li>
+                <li onclick="view_source()">
                     Source code
                 </li>
             </ul>
             <ul class="header__narvigation-right">
-                <li>
+                <li id="view_detail_contact">
                     Thông tin liên hệ
+                    <ul class="view_contact">
+                        <li>hienb1812267@student.ctu.edu.vn</li>
+                        <li>duyb1812256@student.ctu.edu.vn</li>
+                    </ul>
                 </li>
             </ul>
         </div>
@@ -31,7 +35,6 @@
             <input type="text" id="input_name", name="input_name">
             <label for="input_comment">Bình luận</label>
             <textarea name="input_comment" id="input_comment" cols="50" rows="3" required></textarea>
-            <!-- <input type="text" id="input_comment", name="input_comment" required> -->
             <button type="submit" id="add_comment">Dự đoán</button>
         </form>
         <div style="overflow-y: auto; height: 60vh;">
@@ -41,7 +44,6 @@
                         <th class="table__name">Tên người dùng</th>
                         <th class="table__content">Nội dung</th>
                         <th class="table__predict">Đánh giá</th>
-                        <!-- <th class="table__details">Chi tiết</th> -->
                     </tr>
                 </thead>
                 <tbody id="table__body">
@@ -54,6 +56,10 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script type="text/javascript">
+
+    function view_source() {
+        window.open("https://github.com/HienB1812267/sentiment-analysis-tgdd", "_blank");
+    }
 
     $(document).ready(function() {
         firebase.initializeApp({
@@ -89,6 +95,13 @@
             });
         });
     });
+
+    function view_data() {
+        var link = document.createElement("a");
+        link.download = "{{ url_for('static', filename='data_TGDD.json') }}";
+        link.href = "{{ url_for('static', filename='data_TGDD.json') }}";
+        link.click()
+    }
 
 </script>
 </html>

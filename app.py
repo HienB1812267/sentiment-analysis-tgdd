@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, url_for, redirect
 from flask_cors import CORS, cross_origin
 import load_model as MODEL
 import process as PREPROCESS
+import json
 import pandas as pd
 import firebase_admin
 from firebase_admin import credentials, firestore
@@ -25,6 +26,13 @@ app.config['CORS_HEADERS'] = 'Content-Type'
 @cross_origin(origin='*')
 def index_process():
     return render_template("index.html")
+
+# @app.route('/dataset', methods=["POST", "GET"])
+# @cross_origin(origin='*')
+# def view_dataset():
+#     with open("./data/data_TGDD.json", encoding='utf-8') as file:
+#         data = json.loads(file.read())
+#     return render_template("dataset.html", data=data)
 
 @app.route('/predict', methods=["POST", "GET"])
 @cross_origin(origin='*')

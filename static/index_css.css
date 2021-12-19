@@ -132,3 +132,15 @@ html {
 .content__table .table__bad {
     background-color: rgb(255, 167, 167);
 }
+
+.view_contact {
+    position: absolute;
+    background: slategray;
+    top: 42px;
+    right: 0px;
+    visibility: hidden;
+}
+
+#view_detail_contact:hover ul{
+    visibility: visible;
+}
