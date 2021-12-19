@@ -7,7 +7,7 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 
 # Use a service account
-cred = credentials.Certificate('.\sentiment-prediction-tgdd-firebase-adminsdk-olmlq-105780f3e4.json')
+cred = credentials.Certificate('./sentiment-prediction-tgdd-firebase-adminsdk-olmlq-105780f3e4.json')
 firebase_admin.initialize_app(cred)
 
 db = firestore.client()
