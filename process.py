@@ -1,6 +1,5 @@
 import pandas as pd
 import re
-import json
 from pyvi import ViTokenizer
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer

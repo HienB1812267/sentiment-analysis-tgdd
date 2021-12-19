@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, url_for, redirect
 from flask_cors import CORS, cross_origin
 import load_model as MODEL
-import process as PREPROCESS
-# import pandas as pd
-# import firebase_admin
-# from firebase_admin import credentials, firestore
+# import process as PREPROCESS
+import pandas as pd
+import firebase_admin
+from firebase_admin import credentials, firestore
 
 # Use a service account
 # cred = credentials.Certificate('.\sentiment-prediction-tgdd-firebase-adminsdk-olmlq-105780f3e4.json')
