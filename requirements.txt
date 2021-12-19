@@ -2,6 +2,7 @@ Flask==2.0.1
 numpy==1.21.2
 Flask_Cors==3.0.10
 pyvi
+pandas
 scikit-learn
 firebase_admin
 gunicorn
