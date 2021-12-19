@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, url_for, redirect
 from flask_cors import CORS, cross_origin
-# import load_model as MODEL
+import load_model as MODEL
 # import process as PREPROCESS
 # import pandas as pd
 # import firebase_admin
