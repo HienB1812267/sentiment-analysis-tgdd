@@ -94,6 +94,20 @@
                 tr.appendChild(predict);
             });
         });
+
+        $('#add_comment').on('submit', function(e) {
+            $.ajax({
+                url: "{{ url_for('predict_star')}}",
+                type: "POST",
+                success: function(q) {
+                    alert(q);
+                },
+                error: function(q) {
+                    alert("error");
+                }
+            });
+            e.preventDefault();
+        });
     });
 
     function view_data() {
