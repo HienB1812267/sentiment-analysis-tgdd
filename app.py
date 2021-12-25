@@ -43,11 +43,9 @@ def predict_star():
     count_vector, tf_idf_vector = MODEL.load_vectorizes()
     input_cv = count_vector.transform(cmt)
     input_tf = tf_idf_vector.transform(cmt)
-
     output = []
     #Ta sẽ dùng mô hình logistic với tf-idf để dự đoán chính. Các mô hình còn lại sẽ được lưu vào database
     # để phục vụ cho chức năng xem chi tiết nếu người dùng muốn xem chi tiết dự đoán của các mô hình#
-
     #load bayes
     bayes_cv, bayes_tf = MODEL.load_bayes_model()
     #Lưu lại dự đoán
