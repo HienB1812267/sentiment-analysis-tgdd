@@ -30,28 +30,44 @@
     <div class="content">
         <h1 class="content__topTopic">Mô hình dự đoán đánh giá người dùng Thế Giới Di Động</h1>
         <hr>
-        <form action="/predict" method="POST" class="content__formInput">
+        <form class="content__formInput" id="form_predict">
             <label for="input_name">Tên người dùng</label>
             <input type="text" id="input_name", name="input_name">
             <label for="input_comment">Bình luận</label>
-            <textarea name="input_comment" id="input_comment" cols="50" rows="3" required></textarea>
-            <button type="submit" id="add_comment">Dự đoán</button>
+            <textarea name="input_comment" id="input_comment" cols="50" rows="3"></textarea>
+            <button type="button" id="add_comment">Dự đoán</button>
         </form>
-        <div style="overflow-y: auto; height: 60vh;">
-            <table border="solid" style="width: 100%;" class="content__table">
-                <thead>
-                    <tr>
-                        <th class="table__name">Tên người dùng</th>
-                        <th class="table__content">Nội dung</th>
-                        <th class="table__predict">Đánh giá</th>
-                    </tr>
-                </thead>
-                <tbody id="table__body">
-                </tbody>
-            </table>
+        <div>
+            <input type="file" accept=".csv" id="file__input">
+            <button type="button" id="file__button">Dự đoán</button>
         </div>
+        <div id="result">
+            <p id="result__name"></p>
+            <p id="result__comment"></p>
+            <p id="result__model"></p>
+        </div>
+        <div id="result__table">
+
+        </div>
+        <details>
+            <summary onclick="on_off(this)" style="cursor: pointer; font-size: 18px; padding: 5px;">Hiện bảng</summary>
+            <div>
+                <table border="solid" class="content__table" style=" width: 100%;">
+                    <thead>
+                        <tr>
+                            <th class="table__name">Tên người dùng</th>
+                            <th class="table__content">Nội dung</th>
+                            <th class="table__predict">Đánh giá</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table__body">
+                    </tbody>
+                </table>
+            </div>
+        </details>
     </div>
 </body>
+{% block script %}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
@@ -61,12 +77,20 @@
         window.open("https://github.com/HienB1812267/sentiment-analysis-tgdd", "_blank");
     }
 
-    $(document).ready(function() {
-        firebase.initializeApp({
+    firebase.initializeApp({
             apiKey: "AIzaSyDhpFRiDvSe5u7cehOMJG9RNSMd5dvWHKg",
             authDomain: 'sentiment-prediction-tgdd.firebaseapp.com',
             projectId: 'sentiment-prediction-tgdd'
         });
+
+    function on_off(tag) {
+        if (tag.innerText == "Hiện bảng")
+            tag.innerText = "Ẩn bảng";
+        else
+            tag.innerText = "Hiện bảng";
+    }
+
+    function render() {
         var db = firebase.firestore();
         db.collection("data").get().then((querySnapshot) => {
             var tbody = document.getElementById("table__body")
@@ -94,7 +118,38 @@
                 tr.appendChild(predict);
             });
         });
+    }
+
+    $(document).ready(function() {
+        render()
     });
+
+    function csvToArray(str, delimiter = ",") {
+    // slice from start of text to the first \n index
+    // use split to create an array from string by delimiter
+    const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
+
+    // slice from \n index + 1 to the end of the text
+    // use split to create an array of each csv value row
+    const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+
+    // Map the rows
+    // split values from each row into an array
+    // use headers.reduce to create an object
+    // object properties derived from headers:values
+    // the object passed as an element of the array
+    const arr = rows.map(function (row) {
+        const values = row.split(delimiter);
+        const el = headers.reduce(function (object, header, index) {
+        object[header] = values[index];
+        return object;
+        }, {});
+        return el;
+    });
+
+    // return the array
+    return arr;
+    }
 
     function view_data() {
         var link = document.createElement("a");
@@ -102,6 +157,103 @@
         link.href = "{{ url_for('static', filename='data_TGDD.json') }}";
         link.click()
     }
+    submit_button = document.getElementById("add_comment");
+    submit_button.onclick = async function () {
+        var name = document.getElementById("input_name");
+        var comment = document.getElementById("input_comment");
+        if (!comment.value) {
+            alert("Vui lòng nhập dữ liệu vào phần bình luận")
+        }
+        else {
+            var entry = [{
+            name: name.value,
+            comment: comment.value
+            }, {name: "123", comment: "321"}];
+            console.log(entry)
+            var res = await fetch("/predict", {
+                method: "POST",
+                body: JSON.stringify(entry),
+                headers: new Headers({
+                    "content-type": "application/json"
+                })
+            })
+            var output = await res.json();
+            output = output['result'][0]
+            var get_tag_name = document.getElementById("result__name");
+            get_tag_name.innerText = output['name'];
+            var get_tag_comment = document.getElementById("result__comment");
+            get_tag_comment.innerText = output['comment'];
+            var get_tag_result_model = document.getElementById("result__model");
+            get_tag_result_model.innerText = output['result'];
+            render()
+        }
+    }
+
+    file_button = document.getElementById("file__button")
+    file_button.onclick = async function() {
+        // e.preventDefault();
+        var file = document.getElementById("file__input")
+        var input = file.files[0];
+        if (!input)
+            alert("File không được để trống, file phải là định dạng csv");
+        else {
+            var entry = []
+            var data
+            const reader = new FileReader();
+            reader.onload = async function (e) {
+                const text = e.target.result;
+                data = csvToArray(text, '\t');
+                if (!data[data.length - 1]['name'])
+                    data.pop();
+                    var res = await fetch("/predict", {
+                method: "POST",
+                body: JSON.stringify(data),
+                headers: new Headers({
+                    "content-type": "application/json; charset=utf-8"
+                })
+            })
+            var output = await res.json();
+            output = output['result'];
+            // console.log(output)
+            var result_table = document.getElementById("result__table");
+            var table = document.createElement("table");
+            result_table.appendChild(table);
+            var thead = document.createElement("thead");
+            table.appendChild(thead);
+            var tr = document.createElement("tr");
+            thead.appendChild(tr);
+            var th = document.createElement("th");
+            th.innerText = "Tên Người Dùng";
+            tr.appendChild(th)
+            th = document.createElement("th");
+            th.innerText = "Bình luận";
+            tr.appendChild(th)
+            th = document.createElement("th");
+            th.innerText = "Dự đoán";
+            tr.appendChild(th)
+            var tbody = document.createElement("tbody")
+            table.appendChild(tbody)
+            for (var line of output) {
+                console.log(line)
+                var tr = document.createElement("tr")
+                var td = document.createElement("td");
+                td.innerText = line['name']
+                tr.appendChild(td)
+                td = document.createElement("td");
+                td.innerText = line['comment']
+                tr.appendChild(td)
+                td = document.createElement("td");
+                td.innerText = line['result']
+                tr.appendChild(td)
+                tbody.appendChild(tr)
+            }
+            render()
+            }
+            reader.readAsText(input);
+            
+        }
+    }
 
 </script>
+{% endblock %}
 </html>

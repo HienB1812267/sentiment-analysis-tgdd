@@ -144,3 +144,11 @@ html {
 #view_detail_contact:hover ul{
     visibility: visible;
 }
+
+#result {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    cursor: pointer;
+}
