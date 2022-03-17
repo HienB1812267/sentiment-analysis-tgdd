@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index_css.css') }}">
     <title>Dự đoán đánh giá của người dùng Thế Giới Di Động</title>
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
     <div class="header">
         <div class="header__narvigation">
@@ -22,23 +27,38 @@
                     <ul class="view_contact">
                         <li>hienb1812267@student.ctu.edu.vn</li>
                         <li>duyb1812256@student.ctu.edu.vn</li>
+                        <li>duyb1812257@student.ctu.edu.vn</li>
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
+    <h1 class="title">Mô hình dự đoán đánh giá người dùng Thế Giới Di Động</h1>
     <div class="content">
-        <h1 class="content__topTopic">Mô hình dự đoán đánh giá người dùng Thế Giới Di Động</h1>
-        <hr>
         <form class="content__formInput" id="form_predict">
-            <label for="input_name">Tên người dùng</label>
-            <input type="text" id="input_name", name="input_name">
-            <label for="input_comment">Bình luận</label>
-            <textarea name="input_comment" id="input_comment" cols="50" rows="3"></textarea>
+            <div class="form-group">
+                <label for="input_name">Tên người dùng</label>
+                <input type="text" id="input_name" , name="input_name">
+            </div>
+            <div class="form-group">
+                <label for="input_comment">Bình luận</label>
+                <textarea name="input_comment" id="input_comment" cols="50" rows="3"></textarea>
+            </div>
             <button type="button" id="add_comment">Dự đoán</button>
         </form>
-        <div>
-            <input type="file" accept=".csv" id="file__input">
+
+        <div class="indicator">
+
+        </div>
+        <p class="use-file">
+            📁 Hoặc dùng file để dự đoán
+        </p>
+
+        <div class="file-upload">
+            <div class="file-upload__warpper">
+                <input type="file" accept=".csv" id="file__input" draggable="true">
+                <p>Click vào khu vực này để tải file</p>
+            </div>
             <button type="button" id="file__button">Dự đoán</button>
         </div>
         <div id="result">
@@ -51,8 +71,8 @@
         </div>
         <details>
             <summary onclick="on_off(this)" style="cursor: pointer; font-size: 18px; padding: 5px;">Hiện bảng</summary>
-            <div>
-                <table border="solid" class="content__table" style=" width: 100%;">
+            <div class="content">
+                <table class="content__table">
                     <thead>
                         <tr>
                             <th class="table__name">Tên người dùng</th>
@@ -78,10 +98,10 @@
     }
 
     firebase.initializeApp({
-            apiKey: "AIzaSyDhpFRiDvSe5u7cehOMJG9RNSMd5dvWHKg",
-            authDomain: 'sentiment-prediction-tgdd.firebaseapp.com',
-            projectId: 'sentiment-prediction-tgdd'
-        });
+        apiKey: "AIzaSyDhpFRiDvSe5u7cehOMJG9RNSMd5dvWHKg",
+        authDomain: 'sentiment-prediction-tgdd.firebaseapp.com',
+        projectId: 'sentiment-prediction-tgdd'
+    });
 
     function on_off(tag) {
         if (tag.innerText == "Hiện bảng")
@@ -97,9 +117,9 @@
             querySnapshot.forEach((doc) => {
                 var data = doc.data();
                 var tr = document.createElement("tr");
-                if (data.logis_tf == 1) 
+                if (data.logis_tf == 1)
                     tr.className = "table__good";
-                else 
+                else
                     tr.className = "table__bad";
                 tbody.appendChild(tr);
                 var name = document.createElement("td");
@@ -112,43 +132,43 @@
                 tr.appendChild(comment);
                 var predict = document.createElement("TD");
                 if (data.logis_tf == 1)
-                    predict.innerHTML = "Đánh giá tốt";
+                    predict.innerHTML = "Đánh giá tốt  👍 ";
                 else
-                    predict.innerHTML = "Đánh giá tệ";
+                    predict.innerHTML = "Đánh giá tệ 👎";
                 tr.appendChild(predict);
             });
         });
     }
 
-    $(document).ready(function() {
+    $(document).ready(function () {
         render()
     });
 
     function csvToArray(str, delimiter = ",") {
-    // slice from start of text to the first \n index
-    // use split to create an array from string by delimiter
-    const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
+        // slice from start of text to the first \n index
+        // use split to create an array from string by delimiter
+        const headers = str.slice(0, str.indexOf("\n")).split(delimiter);
 
-    // slice from \n index + 1 to the end of the text
-    // use split to create an array of each csv value row
-    const rows = str.slice(str.indexOf("\n") + 1).split("\n");
+        // slice from \n index + 1 to the end of the text
+        // use split to create an array of each csv value row
+        const rows = str.slice(str.indexOf("\n") + 1).split("\n");
 
-    // Map the rows
-    // split values from each row into an array
-    // use headers.reduce to create an object
-    // object properties derived from headers:values
-    // the object passed as an element of the array
-    const arr = rows.map(function (row) {
-        const values = row.split(delimiter);
-        const el = headers.reduce(function (object, header, index) {
-        object[header] = values[index];
-        return object;
-        }, {});
-        return el;
-    });
+        // Map the rows
+        // split values from each row into an array
+        // use headers.reduce to create an object
+        // object properties derived from headers:values
+        // the object passed as an element of the array
+        const arr = rows.map(function (row) {
+            const values = row.split(delimiter);
+            const el = headers.reduce(function (object, header, index) {
+                object[header] = values[index];
+                return object;
+            }, {});
+            return el;
+        });
 
-    // return the array
-    return arr;
+        // return the array
+        return arr;
     }
 
     function view_data() {
@@ -166,9 +186,9 @@
         }
         else {
             var entry = [{
-            name: name.value,
-            comment: comment.value
-            }, {name: "123", comment: "321"}];
+                name: name.value,
+                comment: comment.value
+            }, { name: "123", comment: "321" }];
             console.log(entry)
             var res = await fetch("/predict", {
                 method: "POST",
@@ -190,7 +210,7 @@
     }
 
     file_button = document.getElementById("file__button")
-    file_button.onclick = async function() {
+    file_button.onclick = async function () {
         // e.preventDefault();
         var file = document.getElementById("file__input")
         var input = file.files[0];
@@ -205,55 +225,56 @@
                 data = csvToArray(text, '\t');
                 if (!data[data.length - 1]['name'])
                     data.pop();
-                    var res = await fetch("/predict", {
-                method: "POST",
-                body: JSON.stringify(data),
-                headers: new Headers({
-                    "content-type": "application/json; charset=utf-8"
+                var res = await fetch("/predict", {
+                    method: "POST",
+                    body: JSON.stringify(data),
+                    headers: new Headers({
+                        "content-type": "application/json; charset=utf-8"
+                    })
                 })
-            })
-            var output = await res.json();
-            output = output['result'];
-            // console.log(output)
-            var result_table = document.getElementById("result__table");
-            var table = document.createElement("table");
-            result_table.appendChild(table);
-            var thead = document.createElement("thead");
-            table.appendChild(thead);
-            var tr = document.createElement("tr");
-            thead.appendChild(tr);
-            var th = document.createElement("th");
-            th.innerText = "Tên Người Dùng";
-            tr.appendChild(th)
-            th = document.createElement("th");
-            th.innerText = "Bình luận";
-            tr.appendChild(th)
-            th = document.createElement("th");
-            th.innerText = "Dự đoán";
-            tr.appendChild(th)
-            var tbody = document.createElement("tbody")
-            table.appendChild(tbody)
-            for (var line of output) {
-                console.log(line)
-                var tr = document.createElement("tr")
-                var td = document.createElement("td");
-                td.innerText = line['name']
-                tr.appendChild(td)
-                td = document.createElement("td");
-                td.innerText = line['comment']
-                tr.appendChild(td)
-                td = document.createElement("td");
-                td.innerText = line['result']
-                tr.appendChild(td)
-                tbody.appendChild(tr)
-            }
-            render()
+                var output = await res.json();
+                output = output['result'];
+                // console.log(output)
+                var result_table = document.getElementById("result__table");
+                var table = document.createElement("table");
+                result_table.appendChild(table);
+                var thead = document.createElement("thead");
+                table.appendChild(thead);
+                var tr = document.createElement("tr");
+                thead.appendChild(tr);
+                var th = document.createElement("th");
+                th.innerText = "Tên Người Dùng";
+                tr.appendChild(th)
+                th = document.createElement("th");
+                th.innerText = "Bình luận";
+                tr.appendChild(th)
+                th = document.createElement("th");
+                th.innerText = "Dự đoán";
+                tr.appendChild(th)
+                var tbody = document.createElement("tbody")
+                table.appendChild(tbody)
+                for (var line of output) {
+                    console.log(line)
+                    var tr = document.createElement("tr")
+                    var td = document.createElement("td");
+                    td.innerText = line['name']
+                    tr.appendChild(td)
+                    td = document.createElement("td");
+                    td.innerText = line['comment']
+                    tr.appendChild(td)
+                    td = document.createElement("td");
+                    td.innerText = line['result']
+                    tr.appendChild(td)
+                    tbody.appendChild(tr)
+                }
+                render()
             }
             reader.readAsText(input);
-            
+
         }
     }
 
 </script>
 {% endblock %}
+
 </html>

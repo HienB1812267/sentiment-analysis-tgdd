@@ -8,19 +8,25 @@ html {
     font-size: 15px;
     line-height: 1.4;
     background-color: white;
+    font-family: 'Inter', sans-serif;
+    color: #1e293b;
 }
 
 .header {
     width: 100%;
-    padding: 20px 0px;
+    background-color: white;
+
 }
 
 .header__narvigation {
     width: 100%;
-    background-color: slategray;
+    background-color: #0f172a;
     display: flex;
+    align-items: center;
     position: fixed;
     top: 0px;
+    height: 60px;
+    z-index: 1000;
 }
 
 .header__narvigation .header__narvigation-left {
@@ -40,38 +46,89 @@ html {
 
 .header__narvigation ul li {
     padding: 7px 10px;
-    font-size: 20px;
+    font-size: 16px;
     color: whitesmoke;
     cursor: pointer;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    transition: all .1s ease-in-out;
 }
 
 .header__narvigation ul li:hover {
-    background-color: black;
+    background-color: #473fce;
 }
 
 .content {
     width: 100%;
     background-color: rgb(255, 255, 255);
+
 }
 
-.content .content__topTopic {
-    padding: 15px;
-    font-size: 35px;
+.title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
     text-align: center;
+    height: 90px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    color: #473fce;
+    width: 100%;
+    background-color: #fff;
+    margin-bottom: 5px;
+    margin-top: 60px;
 }
+
+/* Form */
+
 
 .content__formInput {
-    padding: 20px 2px 20px 35px;
+    padding: 20px;
+    width: 900px;
+    margin: 0 auto;
+}
+
+.form-group {
     display: flex;
-    align-items: flex-start;
-    font-size: 18px;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .content__formInput label {
-    padding: 0px 10px;
+    font-size: 14px;
+    margin-bottom: 5px;
+    line-height: 1.8rem;
+    font-weight: 500;
+    color: #1e293b;
 }
 
-.content__formInput #input_name {
+.form-group input, textarea {
+    width: 100%;
+    min-height: 48px;
+    border-radius: 6px;
+    padding: 0 16px;
+    border: 1px solid rgb(203 213 225);
+    font-size: 16px;
+}
+
+.form-group textarea {
+    padding: 16px;
+}
+
+.form-group input:focus-visible {
+    border-color: #473fce;
+    outline: none;
+}
+
+.form-group textarea:focus-visible {
+    border-color: #473fce;
+    outline: none;
+}
+
+
+/* .content__formInput #input_name {
     font-size: 18px;
     margin-right: 50px;
 }
@@ -79,69 +136,101 @@ html {
 .content__formInput #input_comment {
     font-size: 18px;
     resize: none;
-}
+} */
 
 .content__formInput button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    color: #fff;
+    border-radius: 4px;
+    background-color: #473fce;
+    border: none;
+    outline: none;
     font-size: 18px;
-    margin-left: 15px;
-    background-color: slategray;
-    border: solid 1px black;
-    padding: 3px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.1s linear;
 }
 
 .content__formInput button:hover {
-    background-color: rgb(161, 180, 199);
-    cursor: pointer;
+    background-color: #2f26d3;
+}
+
+details .content {
+    width: 100%;
+    height: 100%;
+    /* padding: 20px; */
+    /* border-radius: 10; */
+    border-radius: 10px;
+
+    max-height: 600px;
+    overflow-y: auto;
 }
 
 .content .content__table {
-    border-collapse: collapse;
-    border: 1px black solid;
-    margin: 0 auto;
-    font-size: 17px;
-    width: 98% !important;
-    margin: 0px auto;
+    border-radius: 8px;
+  
+    height: 100%;
 }
 
 .content__table .table__name {
-    width: 12%;
+    width: 15%;
+}
+
+.content__table thead {
+    background-color: #473fce;
+    color: #fff;
+
+}
+
+.content__table thead th {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 5px;
+}
+
+
+.content__table tbody tr td {
+    font-size: 16px;
+    font-weight: 500 !important;
+    padding: 10px;
+
 }
 
 .content__table .table__content {
-    width: 80%;
-    font-weight: bold;
+    font-size: 16px;
 }
 
 .content__table .table__predict {
-    width: 8%;
+    width: 18%;
+
 }
 
 /* .content__table .table__details {
     width: 25%;
 } */
 
-.content__table td {
-    text-align: center;
-    padding: 1px 3px;
-}
-
 .content__table .table__good {
-    background-color: rgb(0, 255, 221);
+    background-color: #F2F2F2;
 }
 
 .content__table .table__bad {
-    background-color: rgb(255, 167, 167);
+    background-color: #e0e0e0;
 }
 
 .view_contact {
     position: absolute;
-    background: slategray;
-    top: 42px;
-    right: 0px;
+    background-color: #0f172a;
+    top: 100%;
+    right: 10px;
     visibility: hidden;
+    overflow: hidden;
 }
 
-#view_detail_contact:hover ul{
+#view_detail_contact:hover ul {
     visibility: visible;
 }
 
@@ -152,3 +241,85 @@ html {
     font-size: 18px;
     cursor: pointer;
 }
+
+.indicator {
+    width: 860px;
+    margin: 0 auto;
+    height: 1px;
+    box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.5), 0 1px 2px -1px rgb(0 0 0 / 0.5);
+}
+
+.use-file {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 18px;
+    color: #473fce;
+    font-weight: 600;
+}
+
+/* File upload */
+.file-upload {
+    width: 900px;
+    height: 200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.file-upload__warpper {
+    width: 100%;
+    height: 100%;
+    border: 4px dashed #473fce;
+    position: relative;
+
+}
+
+.file-upload input {
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    cursor: pointer;
+}
+
+.file-upload p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: #1e293b;
+    z-index: 9;
+}
+
+.file-upload button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 48px;
+    color: #fff;
+    border-radius: 4px;
+    background-color: #473fce;
+    border: none;
+    outline: none;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.1s linear;
+    margin-top: 10px;
+}
+
+.file-upload button:hover {
+    background-color: #2f26d3;
+}
+
+details {
+    width: 900px;
+    margin: 20px auto;
+    padding: 20px;   
+}
+
+summary {}
