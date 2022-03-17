@@ -154,6 +154,9 @@ html {
     cursor: pointer;
     transition: all 0.1s linear;
 }
+.content__formInput button .dang_du_doan{
+    /* display: none; */
+}
 
 .content__formInput button:hover {
     background-color: #2f26d3;
@@ -172,7 +175,7 @@ details .content {
 
 .content .content__table {
     border-radius: 8px;
-  
+
     height: 100%;
 }
 
@@ -240,7 +243,37 @@ details .content {
     flex-direction: column;
     font-size: 18px;
     cursor: pointer;
+    margin: 0 auto;
+    margin-top: 40px;
+    width: 900px;
+    padding: 20px;
 }
+
+#result p {
+    font-size: 16px;
+    padding-left: 20px;
+}
+
+#result #result__predict{
+    font-size: 18px;
+    font-weight: 600;
+    color: #473fce;
+    margin-bottom: 10px;
+} 
+
+#result #result__name {
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+#result #result__comment {
+    margin-bottom: 5px;
+}
+
+#result #result__model {
+    font-weight: 600;
+}
+
 
 .indicator {
     width: 860px;
@@ -286,12 +319,20 @@ details .content {
 
 .file-upload p {
     position: absolute;
-    top: 50%;
+    top: 40%;
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 14px;
     color: #1e293b;
     z-index: 9;
+}
+
+.file-upload #file__name{
+    font-size: 18px;
+    font-weight: 600;
+    color: #473fce;
+    margin-top: 10px;
+    top: 50%;
 }
 
 .file-upload button {
@@ -319,7 +360,54 @@ details .content {
 details {
     width: 900px;
     margin: 20px auto;
-    padding: 20px;   
+    padding: 20px;
 }
 
-summary {}
+
+/* Result Table */
+#result__table{
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#result-table__predict{
+    font-size: 18px;
+    font-weight: 600;
+    color: #473fce;
+    margin-bottom: 10px;
+}
+
+#result__table table {
+    
+    border-radius: 8px;
+    height: 400px;
+    overflow-y: auto;
+    border: 1px solid rgb(203 213 225);
+}
+
+
+#result__table table thead {
+    background-color: #473fce;
+    color: #fff;
+    border-bottom: 1px solid rgb(203 213 225);
+
+}
+
+#result__table table thead th {
+    font-size: 16px;
+    font-weight: 500;
+    padding: 5px;
+}
+#result__table table tbody tr{
+    border-bottom: 1px solid rgb(203 213 225);
+
+}
+
+
+#result__table table tbody tr td {
+    font-size: 16px;
+    font-weight: 500 !important;
+    padding: 10px;
+
+}

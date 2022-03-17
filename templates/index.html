@@ -44,7 +44,8 @@
                 <label for="input_comment">Bình luận</label>
                 <textarea name="input_comment" id="input_comment" cols="50" rows="3"></textarea>
             </div>
-            <button type="button" id="add_comment">Dự đoán</button>
+            <button type="button" id="add_comment"><span class="du_doan">Dự đoán</span><span class="dang_du_doan">Đang
+                    dự đoán...</span></button>
         </form>
 
         <div class="indicator">
@@ -58,16 +59,19 @@
             <div class="file-upload__warpper">
                 <input type="file" accept=".csv" id="file__input" draggable="true">
                 <p>Click vào khu vực này để tải file</p>
+                <p id='file__name'></p>
             </div>
-            <button type="button" id="file__button">Dự đoán</button>
+            <button type="button" id="file__button"><span class="du_doan_file">Dự đoán</span><span
+                    class="dang_du_doan_file">Đang dự đoán...</span></button>
         </div>
         <div id="result">
+            <h2 id="result__predict"></h2>
             <p id="result__name"></p>
             <p id="result__comment"></p>
             <p id="result__model"></p>
         </div>
         <div id="result__table">
-
+            <h2 id="result-table__predict"></h2>
         </div>
         <details>
             <summary onclick="on_off(this)" style="cursor: pointer; font-size: 18px; padding: 5px;">Hiện bảng</summary>
@@ -92,6 +96,18 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script type="text/javascript">
+
+    //  Du doan nhap
+    var dang_du_doan = document.querySelector(".dang_du_doan");
+    dang_du_doan.style.display = "none";
+    var du_doan = document.querySelector(".du_doan");
+
+    // Du doan cho file
+    var dang_du_doan_file = document.querySelector(".dang_du_doan_file");
+    dang_du_doan_file.style.display = "none";
+    var du_doan_file = document.querySelector(".du_doan_file");
+
+
 
     function view_source() {
         window.open("https://github.com/HienB1812267/sentiment-analysis-tgdd", "_blank");
@@ -189,7 +205,11 @@
                 name: name.value,
                 comment: comment.value
             }, { name: "123", comment: "321" }];
-            console.log(entry)
+
+            // Loading          
+            dang_du_doan.style.display = 'block';
+            du_doan.style.display = 'none';
+
             var res = await fetch("/predict", {
                 method: "POST",
                 body: JSON.stringify(entry),
@@ -197,34 +217,54 @@
                     "content-type": "application/json"
                 })
             })
+
             var output = await res.json();
             output = output['result'][0]
+            var get_tag_result__predict = document.getElementById("result__predict");
+            get_tag_result__predict.innerText = 'Đánh giá của bạn:';
             var get_tag_name = document.getElementById("result__name");
-            get_tag_name.innerText = output['name'];
+            get_tag_name.innerText = `Tên người dùng: ${output['name']}`;
             var get_tag_comment = document.getElementById("result__comment");
-            get_tag_comment.innerText = output['comment'];
+            get_tag_comment.innerText = `Nội dung bình luận: ${output['comment']}`;
             var get_tag_result_model = document.getElementById("result__model");
-            get_tag_result_model.innerText = output['result'];
+            get_tag_result_model.innerText = `Kết quả: ${output['result']}`;
+
+            dang_du_doan.style.display = 'none';
+            du_doan.style.display = 'block';
+
             render()
         }
     }
 
     file_button = document.getElementById("file__button")
+    var file__input = document.getElementById("file__input")
+    var input;
+    file__input.onchange = function (e) {
+        input = e.target.files[0];
+        var file__name = document.getElementById('file__name');
+        file__name.innerHTML = `${input.name} (${input.size/1000} kB)`;
+    }
+
+  
     file_button.onclick = async function () {
-        // e.preventDefault();
-        var file = document.getElementById("file__input")
-        var input = file.files[0];
+        // e.preventDefault();       
         if (!input)
             alert("File không được để trống, file phải là định dạng csv");
         else {
             var entry = []
             var data
             const reader = new FileReader();
+
             reader.onload = async function (e) {
                 const text = e.target.result;
                 data = csvToArray(text, '\t');
                 if (!data[data.length - 1]['name'])
                     data.pop();
+
+                // Loading
+                dang_du_doan_file.style.display = 'block';
+                du_doan_file.style.display = 'none';
+
                 var res = await fetch("/predict", {
                     method: "POST",
                     body: JSON.stringify(data),
@@ -233,8 +273,15 @@
                     })
                 })
                 var output = await res.json();
+
+                dang_du_doan_file.style.display = 'none';
+                du_doan_file.style.display = 'block';
+
+
                 output = output['result'];
                 // console.log(output)
+                var get_tag_result_table__predict = document.getElementById("result-table__predict");
+                get_tag_result_table__predict.innerText = 'Kết quả đánh giá:';
                 var result_table = document.getElementById("result__table");
                 var table = document.createElement("table");
                 result_table.appendChild(table);
@@ -254,7 +301,6 @@
                 var tbody = document.createElement("tbody")
                 table.appendChild(tbody)
                 for (var line of output) {
-                    console.log(line)
                     var tr = document.createElement("tr")
                     var td = document.createElement("td");
                     td.innerText = line['name']
