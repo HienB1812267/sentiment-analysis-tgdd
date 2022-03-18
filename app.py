@@ -58,16 +58,10 @@ def predict_star():
         output.append(bayes_tf.predict(input_tf)[0])
 
         #load svm
-        svm_cv, svm_tf = MODEL.load_svm_model()
+        svm_cv = MODEL.load_svm_model()
         #Lưu lại dự đoán
         output.append(svm_cv.predict(input_cv)[0])
-        output.append(svm_tf.predict(input_tf)[0])
-
-        #load svm
-        logistic_cv, logistic_tf = MODEL.load_svm_model()
-        #Lưu lại dự đoán
-        output.append(logistic_cv.predict(input_cv)[0])
-        output.append(logistic_tf.predict(input_tf)[0])
+        # output.append(svm_tf.predict(input_tf)[0])
         #connect db
         doc_ref = db.collection(u'data').document()
         doc_ref.set({
@@ -76,12 +70,9 @@ def predict_star():
             u'bayes_cv': int(output[0]),
             u'bayes_tf': int(output[1]),
             u'svm_cv': int(output[2]),
-            u'svm_tf': int(output[3]),
-            u'logis_cv': int(output[4]),
-            u'logis_tf': int(output[5]),
         })
         predict = 'Đánh giá tệ'
-        if output[5] == 1:
+        if output[2] == 1:
             predict = 'Đánh giá tốt'
 
         res.append({
